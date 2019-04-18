@@ -1,6 +1,8 @@
 #ifndef TESTER_H
 #define TESTER_H
 
+#include <vector>
+
 #include "LinkedListOfInts.h"
 
 using list = LinkedListOfInts; 
@@ -19,6 +21,7 @@ class Tester
 		void testAddBack()		const;
 		void testAddFront()		const;
 		void testRemoveBack()	const;
+		void testRemoveFront()	const;
 
 		static const std::string fail; 
 		static const std::string pass;

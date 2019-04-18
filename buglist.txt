@@ -1,3 +1,3 @@
-removeBack and removeFront don't decrement the size
 addFront adds to the back
 addBack adds to the front
+removeBack and removeFront don't remove anything

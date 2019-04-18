@@ -1,15 +1,23 @@
 #include "tester.h"
 #include <iostream>
 #include "string"
-#include <vector>
 
 
-const std::string Tester::fail			= "\033[1;31mFAILED\033[0m";
-const std::string Tester::pass			= "\033[1;32mPASSED\033[0m";
-const std::string Tester::startYellow	= "\033[1;33m";
-const std::string Tester::endYellow		= "\033[0m";
-const std::string Tester::startComment  = "\033[1;34m";
-const std::string Tester::endComment	= "\033[0m";
+#ifdef __linux__
+	const std::string Tester::fail			= "\033[1;31mFAILED\033[0m";
+	const std::string Tester::pass			= "\033[1;32mPASSED\033[0m";
+	const std::string Tester::startYellow	= "\033[1;33m";
+	const std::string Tester::endYellow		= "\033[0m";
+	const std::string Tester::startComment  = "\033[1;34m";
+	const std::string Tester::endComment	= "\033[0m";
+#else
+	const std::string Tester::fail			= "";
+	const std::string Tester::pass			= "";
+	const std::string Tester::startYellow	= "";
+	const std::string Tester::endYellow		= "";
+	const std::string Tester::startComment  = "";
+	const std::string Tester::endComment	= "";
+#endif 
 
 Tester::Tester()
 {
@@ -23,8 +31,7 @@ void Tester::test()
 	testSize();
 	std::cout << '\n';
 	
-	std::cout << startYellow << "Testing Constructor" << endYellow << '\n';
-	testConstructor();
+	std::cout << startYellow << "Testing Constructor" << endYellow << '\n'; testConstructor();
 	std::cout << '\n';
 
 	std::cout << startYellow << "Testing isEmpty method" << endYellow << '\n';
@@ -41,6 +48,14 @@ void Tester::test()
 
 	std::cout << startYellow << "Testing addFront method" << endYellow << '\n';
 	testAddFront();
+	std::cout << '\n';
+
+	std::cout << startYellow << "Testing removeBack method" << endYellow << '\n';
+	testRemoveBack();
+	std::cout << '\n';
+
+	std::cout << startYellow << "Testing removeFront method" << endYellow << '\n';
+	testRemoveFront();
 	std::cout << '\n';
 }
 
@@ -196,7 +211,6 @@ void Tester::testRemoveBack() const
 {
 	list testList;
 	fillList(testList);
-	auto vec = testList.toVector();
 	std::string value;
 
 	std::cout << startComment;
@@ -207,9 +221,42 @@ void Tester::testRemoveBack() const
 
 	for(int i = 0; i < 10; ++i)
 	{
+		auto popVec = testList.toVector();
+		popVec.pop_back();
+		testList.removeBack();
+		auto copyVec = testList.toVector();
+
+		value = popVec == copyVec ? pass : fail;
+		std::cout << "removeBack removes last element: " << value << '\n';
 	}
 }
 
+
+void Tester::testRemoveFront()	const
+{
+	list testList;
+	fillList(testList);
+	std::string value;
+
+	std::cout << startComment;
+	std::cout << "\nTesting by ensuring that the values in the vector returned\n"
+			  << "by toVector match the expected values after removing from the"
+			  << "front of the list\n\n" ;
+	std::cout << endComment;
+
+	for(int i = 0; i < 10; ++i)
+	{
+		auto popVec = testList.toVector();
+		popVec.erase(popVec.begin());
+		testList.removeFront();
+		auto copyVec = testList.toVector();
+
+		value = popVec == copyVec ? pass : fail;
+		std::cout << "removeBack removes first element: " << value << '\n';
+	}
+}
+
+		
 void fillList(list& l, bool fromTheBack)
 {
 	for(int i = 0; i < 10; ++i)
