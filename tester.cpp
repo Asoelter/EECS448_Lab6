@@ -68,10 +68,7 @@ void Tester::testSize()	const
 
 	list secondList;
 
-	for(int i = 0; i < maxTests; ++i)
-	{
-		secondList.addFront(i);
-	}
+	fillList(secondList, false);
 
 	secondList.removeFront();
 	removeBackValue = testList.size() == maxTests - 2 ? pass : fail;
@@ -148,10 +145,7 @@ void Tester::testAddBack() const
 {
 	list testList;
 
-	for(int i = 0; i < 10; ++i)
-	{
-		testList.addBack(i);
-	}
+	fillList(testList);
 
 	auto vec = testList.toVector();
 	std::string value;
@@ -200,5 +194,33 @@ void Tester::testAddFront()	const
 
 void Tester::testRemoveBack() const
 {
+	list testList;
+	fillList(testList);
+	auto vec = testList.toVector();
+	std::string value;
 
+	std::cout << startComment;
+	std::cout << "\nTesting by ensuring that the values in the vector returned\n"
+			  << "by toVector match the expected values after removing from the"
+			  << "back of the list\n\n" ;
+	std::cout << endComment;
+
+	for(int i = 0; i < 10; ++i)
+	{
+	}
+}
+
+void fillList(list& l, bool fromTheBack)
+{
+	for(int i = 0; i < 10; ++i)
+	{
+		if(fromTheBack)
+		{
+			l.addBack(i);
+		}
+		else
+		{
+			l.addFront(i);
+		}
+	}
 }

@@ -28,4 +28,6 @@ class Tester
 		static const std::string endComment;
 };
 
+void fillList(list& l, bool fromTheBack = true);
+
 #endif //TESTER_H
